@@ -169,8 +169,8 @@ void Main()
 	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
 	DebugCamera3D camera{ renderTexture.size(), 120_deg, Vec3{ 0, 2, -5 } };
 
-	Physics p1{ 1, {0,0,0}, {4,1,0}, OrientedBox{ {-4,-1,0}, {1,1,1} } };
-	Physics p2{ 1, {0,0,0}, {-4,-1,0}, OrientedBox{ {4,1,0}, {1,1,1}}};
+	Physics p1{ 1, {0,0,0}, {0,-9.8,0}, OrientedBox{ {0,10,0}, {1,1,1} } };
+	Physics p2{ 1, {0,0,0}, {0,0,0}, OrientedBox{ {0,0,0}, {1,1,1}}};
 
 	while (System::Update())
 	{
@@ -189,7 +189,8 @@ void Main()
 				p1.draw(Palette::Red);
 				p2.draw();
 
-				if(p1.obj.intersects(p2.obj)) Physics::collision(p1, p2, 0.5);
+				//if(p1.obj.intersects(p2.obj)) Physics::collision(p1, p2, 0.5);
+				if (p1.obj.intersects(p2.obj)) p1.reflect(p2, 0.5);
 
 				Print << U"IJKL: rotate p2, WSAD: move camera, R: retry";
 				if (KeyJ.down()) {
